@@ -1,0 +1,28 @@
+{% load i18n %}
+
+<html>
+    <head>
+        <title>{{ object }}</title>
+    </head>
+    <body>
+        <nav>
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language">
+                    {% for code, language in LANGUAGES %}
+                    <!--{% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %} -->
+                    
+                        <option value="{{ code }}"{% if code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language }} ({{ code }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Go">
+            </form>
+        </nav>
+        <h1>{{ book.title }}</h1>
+        <h2>{{ book.author }}</h2>
+        <h3>{{ book.description }}</h3>
+    </body>
+</html>
